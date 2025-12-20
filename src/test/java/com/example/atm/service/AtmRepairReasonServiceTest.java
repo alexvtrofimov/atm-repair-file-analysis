@@ -1,0 +1,95 @@
+package com.example.atm.service;
+
+import com.example.atm.IntegrationTest;
+import com.example.atm.controller.dto.ReasonCountDto;
+import com.example.atm.controller.dto.ReasonDurationDto;
+import com.example.atm.controller.dto.ReasonRepeatInterfaceDto;
+import com.example.atm.entity.AtmRepairReason;
+import com.example.atm.exception.EmptySheetException;
+import com.example.atm.exception.ExcelFirstRowException;
+import com.example.atm.exception.ReadFileException;
+import com.example.atm.util.excel.ExcelReader;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class AtmRepairReasonServiceTest extends IntegrationTest {
+
+    @Autowired
+    private AtmRepairReasonService service;
+
+    @Value("${testFileName}")
+    private String testFileName;
+
+    @Test
+    @Order(2)
+    void testAdd() throws ExcelFirstRowException, EmptySheetException, ReadFileException {
+        URL resourceUrl = getClass().getClassLoader().getResource(testFileName);
+        byte[] content = null;
+        try {
+            Path resourcePath = Paths.get(resourceUrl.toURI());
+            content = Files.readAllBytes(resourcePath);
+        } catch (Exception e) {
+
+        }
+        MultipartFile mockFile = new MockMultipartFile(testFileName, content);
+        ExcelReader excelReader = new ExcelReader(mockFile);
+        List<AtmRepairReason> atmRepairReasons = excelReader.readSheet(0);
+        service.add(atmRepairReasons);
+        assertEquals(500, service.count());
+    }
+
+    @Test
+    @Order(1)
+    void testDeleteAll() {
+        service.deleteAll();
+        assertEquals(0, service.count());
+    }
+
+    @Test
+    @Order(3)
+    void testGetAll() {
+        assertEquals(500, service.getAll().size());
+    }
+
+    @Test
+    @Order(4)
+    void testGetTop3Reason() {
+        List<ReasonCountDto> top3Reasons = service.getTop3Reason();
+        assertEquals(211, top3Reasons.get(0).count());
+        assertEquals(86, top3Reasons.get(1).count());
+        assertEquals(60, top3Reasons.get(2).count());
+    }
+
+    @Test
+    @Order(5)
+    void testGetTop3Duration() {
+        List<ReasonDurationDto> top3Duration = service.getTop3Duration();
+        assertEquals("218810091", top3Duration.get(0).caseId());
+        assertEquals("218818827", top3Duration.get(1).caseId());
+        assertEquals("218795847", top3Duration.get(2).caseId());
+    }
+
+    @Test
+    @Order(6)
+    void testGetRepeatRepairs() {
+        List<ReasonRepeatInterfaceDto> repeatRepairs = service.getRepeatRepairs(15);
+        assertEquals(152, repeatRepairs.get(0).getCount());
+        assertEquals(1, repeatRepairs.getLast().getCount());
+    }
+
+}
