@@ -41,17 +41,17 @@
 
 <h4>Docker Compose</h4>
     <ul>
+        <li>Docker version 29</li>
         <li>Выполнить команду в терминале <b>docker-compose up</b> из папки проекта</li>
-        <li>Приложение будет доступно на <b>localhost:8080</b></li>
+        <li>Приложение будет доступно на порту: <b>8080</b></li>
     </ul>
 
 <h4>Локальное развертывание для тестирования и отладки</h4>
 <ul>
-    <li>установить JDK-21</li>
-    <li>установить PostgreSQL
+    <li>Java 21</li>
+    <li>PostgreSQL (18)
         <ul>
             <li>создать базу "atm"</li>
-            <li>создать базу "atm-test" для тестов</li>
         </ul>
     </li>
     
