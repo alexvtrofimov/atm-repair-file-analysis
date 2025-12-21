@@ -60,7 +60,7 @@
                     <div class="col-7 fw-semibold" >Причина</div>
                     <div class="col-5 fw-semibold" >Повторений</div>
                 </div>
-                <div class="row" th:each="topReason:${top3Reason}">
+                <div class="row mx-1" th:each="topReason:${top3Reason}">
                     <div class="col-10" th:text="${topReason.reason}"></div>
                     <div class="col-2" th:text="${topReason.count}"></div>
                 </div>

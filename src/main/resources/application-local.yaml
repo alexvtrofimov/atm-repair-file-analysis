@@ -1,0 +1,6 @@
+# environment variables: --spring.profiles.active=local
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/atm
+    username: postgres
+    password: 123

@@ -23,6 +23,9 @@ public class StatisticController {
 
     @GetMapping
     public String statisticPage(Model model) {
+        List<AtmRepairReason> all = atmRepairReasonService.getAll();
+        model.addAttribute("records", all);
+        model.addAttribute("headers", FileHeaderRow.values());
         return "statistic";
     }
 
@@ -50,7 +53,7 @@ public class StatisticController {
 
     @GetMapping("/repeatRepairs")
     public String repeatRepairs15days(Model model) {
-        List<ReasonRepeatInterfaceDto> repeatRepairs = atmRepairReasonService.getRepeatRepairs(15);
+        List<ReasonRepeatInterfaceDto> repeatRepairs = atmRepairReasonService.getRepeatRepairs15days();
         model.addAttribute("repeatRepairs", repeatRepairs);
         return "statistic";
     }

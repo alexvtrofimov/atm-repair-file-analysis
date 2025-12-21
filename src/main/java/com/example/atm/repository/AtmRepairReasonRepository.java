@@ -37,5 +37,5 @@ public interface AtmRepairReasonRepository extends JpaRepository<AtmRepairReason
             "(a2.time_end >= a1.time_begin AND a2.time_end <= a1.time_end + INTERVAL '15' day) " +
             "GROUP BY a1.case_id, a1.reason " +
             "ORDER BY count(a1.reason) DESC", nativeQuery = true)
-    List<ReasonRepeatInterfaceDto> getRepeatRepairs(int days);
+    List<ReasonRepeatInterfaceDto> getRepeatRepairs15days();
 }

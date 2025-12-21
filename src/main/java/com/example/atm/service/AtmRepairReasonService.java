@@ -45,7 +45,7 @@ public class AtmRepairReasonService {
         return atmRepairReasonRepository.getTop3Duration();
     }
 
-    public List<ReasonRepeatInterfaceDto> getRepeatRepairs(int days) {
-        return atmRepairReasonRepository.getRepeatRepairs(days);
+    public List<ReasonRepeatInterfaceDto> getRepeatRepairs15days() {
+        return atmRepairReasonRepository.getRepeatRepairs15days();
     }
 }
