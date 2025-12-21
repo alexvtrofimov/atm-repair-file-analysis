@@ -4,6 +4,7 @@ import com.example.atm.entity.AtmRepairReason;
 import com.example.atm.exception.EmptySheetException;
 import com.example.atm.exception.ExcelFirstRowException;
 import com.example.atm.exception.ReadFileException;
+import com.example.atm.util.DateTimeFormatterUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,6 @@ import java.util.Optional;
 
 public class ExcelReader {
     private static final Logger log = LoggerFactory.getLogger(ExcelReader.class);
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("M/d/yy H:m");
     private DataFormatter dataFormatter = new DataFormatter();
     private MultipartFile file;
 
@@ -74,18 +74,18 @@ public class ExcelReader {
 
     private AtmRepairReason getAtmRepairReasonFromRow(Row row) {
         AtmRepairReason repairReason = new AtmRepairReason();
-        for (int cellIndex = 0; cellIndex < FileHeaderCellNum.values().length; cellIndex++) {
+        for (int cellIndex = 0; cellIndex < FileHeaderRow.values().length; cellIndex++) {
             Cell cell = row.getCell(cellIndex);
             String strValue = dataFormatter.formatCellValue(cell);
-            switch (FileHeaderCellNum.values()[cellIndex]) {
-                case FileHeaderCellNum.CASE_ID -> repairReason.setCaseId(strValue);
-                case FileHeaderCellNum.ATM_ID -> repairReason.setAtmId(strValue);
-                case FileHeaderCellNum.REASON_NAME -> repairReason.setReason(strValue);
-                case FileHeaderCellNum.BEGIN -> repairReason.setTimeBegin(LocalDateTime.parse(strValue, dateFormatter));
-                case FileHeaderCellNum.END -> repairReason.setTimeEnd(LocalDateTime.parse(strValue, dateFormatter));
-                case FileHeaderCellNum.SERIAL -> repairReason.setSerialNumber(strValue);
-                case FileHeaderCellNum.BANK_NM -> repairReason.setBankNm(strValue);
-                case FileHeaderCellNum.CHANNEL -> repairReason.setChannel(strValue);
+            switch (FileHeaderRow.values()[cellIndex]) {
+                case FileHeaderRow.CASE_ID -> repairReason.setCaseId(strValue);
+                case FileHeaderRow.ATM_ID -> repairReason.setAtmId(strValue);
+                case FileHeaderRow.REASON_NAME -> repairReason.setReason(strValue);
+                case FileHeaderRow.BEGIN -> repairReason.setTimeBegin(LocalDateTime.parse(strValue, DateTimeFormatterUtil.dateExcelFormatter));
+                case FileHeaderRow.END -> repairReason.setTimeEnd(LocalDateTime.parse(strValue, DateTimeFormatterUtil.dateExcelFormatter));
+                case FileHeaderRow.SERIAL -> repairReason.setSerialNumber(strValue);
+                case FileHeaderRow.BANK_NM -> repairReason.setBankNm(strValue);
+                case FileHeaderRow.CHANNEL -> repairReason.setChannel(strValue);
             }
         }
         return repairReason;

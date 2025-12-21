@@ -9,10 +9,7 @@ import com.example.atm.exception.EmptySheetException;
 import com.example.atm.exception.ExcelFirstRowException;
 import com.example.atm.exception.ReadFileException;
 import com.example.atm.util.excel.ExcelReader;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
@@ -84,6 +81,7 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
         assertEquals("218795847", top3Duration.get(2).caseId());
     }
 
+//    @Disabled("Not work H2 sql query with INTERVAL")
     @Test
     @Order(6)
     void testGetRepeatRepairs() {

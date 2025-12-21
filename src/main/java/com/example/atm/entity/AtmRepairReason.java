@@ -1,19 +1,14 @@
 package com.example.atm.entity;
 
+import com.example.atm.util.DateTimeFormatterUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
-
-import java.time.format.DateTimeFormatter;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class AtmRepairReason {
-
-    @Transient
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     @Id
     private String caseId;
@@ -88,7 +83,7 @@ public class AtmRepairReason {
     }
 
     public String getTimeBegin() {
-        return dateTimeFormatter.format(timeBegin);
+        return DateTimeFormatterUtil.getDateStringFormat(timeBegin);
     }
 
     public void setTimeBegin(LocalDateTime timeBegin) {
@@ -96,7 +91,7 @@ public class AtmRepairReason {
     }
 
     public String getTimeEnd() {
-        return dateTimeFormatter.format(timeEnd);
+        return DateTimeFormatterUtil.getDateStringFormat(timeEnd);
     }
 
     public void setTimeEnd(LocalDateTime timeEnd) {
