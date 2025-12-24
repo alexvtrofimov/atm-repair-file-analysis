@@ -82,16 +82,24 @@ public class AtmRepairReason {
         this.reason = reason;
     }
 
-    public String getTimeBegin() {
+    public String getFormatTimeBegin() {
         return DateTimeFormatterUtil.getDateStringFormat(timeBegin);
+    }
+
+    public LocalDateTime getTimeBegin() {
+        return timeBegin;
     }
 
     public void setTimeBegin(LocalDateTime timeBegin) {
         this.timeBegin = timeBegin;
     }
 
-    public String getTimeEnd() {
+    public String getFormatTimeEnd() {
         return DateTimeFormatterUtil.getDateStringFormat(timeEnd);
+    }
+
+    public LocalDateTime getTimeEnd() {
+        return timeEnd;
     }
 
     public void setTimeEnd(LocalDateTime timeEnd) {
