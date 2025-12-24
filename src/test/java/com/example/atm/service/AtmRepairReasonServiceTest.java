@@ -27,6 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AtmRepairReasonServiceTest extends IntegrationTest {
 
+    private final int EXPECTED_TOTAL_COUNT_ROW = 500;
+    private final int EXPECTED_TOP_1_REASON_COUNT = 211;
+    private final int EXPECTED_TOP_2_REASON_COUNT = 86;
+    private final int EXPECTED_TOP_3_REASON_COUNT = 60;
+    private final int EXPECTED_REPEAT_REASON_ATM_TOP = 3;
+    private final int EXPECTED_REPEAT_REASON_ATM_LAST = 1;
+
     @Autowired
     private AtmRepairReasonService service;
 
@@ -48,7 +55,7 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
         ExcelReader excelReader = new ExcelReader(mockFile);
         List<AtmRepairReason> atmRepairReasons = excelReader.readSheet(0);
         service.add(atmRepairReasons);
-        assertEquals(500, service.count());
+        assertEquals(EXPECTED_TOTAL_COUNT_ROW, service.count());
     }
 
     @Test
@@ -61,16 +68,16 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
     @Test
     @Order(3)
     void testGetAll() {
-        assertEquals(500, service.getAll().size());
+        assertEquals(EXPECTED_TOTAL_COUNT_ROW, service.getAll().size());
     }
 
     @Test
     @Order(4)
     void testGetTop3Reason() {
         List<ReasonCountDto> top3Reasons = service.getTop3Reason();
-        assertEquals(211, top3Reasons.get(0).count());
-        assertEquals(86, top3Reasons.get(1).count());
-        assertEquals(60, top3Reasons.get(2).count());
+        assertEquals(EXPECTED_TOP_1_REASON_COUNT, top3Reasons.get(0).count());
+        assertEquals(EXPECTED_TOP_2_REASON_COUNT, top3Reasons.get(1).count());
+        assertEquals(EXPECTED_TOP_3_REASON_COUNT, top3Reasons.get(2).count());
     }
 
     @Test
@@ -87,8 +94,8 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
     @Order(6)
     void testGetRepeatRepairs() {
         List<ReasonRepeatDto> repeatRepairs = service.getRepeatRepairs15days();
-        assertEquals(3, repeatRepairs.get(0).getCount());
-        assertEquals(1, repeatRepairs.getLast().getCount());
+        assertEquals(EXPECTED_REPEAT_REASON_ATM_TOP, repeatRepairs.get(0).getCount());
+        assertEquals(EXPECTED_REPEAT_REASON_ATM_LAST, repeatRepairs.getLast().getCount());
     }
 
 }
