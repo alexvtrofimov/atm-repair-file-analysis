@@ -3,6 +3,7 @@ package com.example.atm.service;
 import com.example.atm.IntegrationTest;
 import com.example.atm.controller.dto.ReasonCountDto;
 import com.example.atm.controller.dto.ReasonDurationDto;
+import com.example.atm.controller.dto.ReasonRepeatDto;
 import com.example.atm.controller.dto.ReasonRepeatInterfaceDto;
 import com.example.atm.entity.AtmRepairReason;
 import com.example.atm.exception.EmptySheetException;
@@ -85,7 +86,7 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
     @Test
     @Order(6)
     void testGetRepeatRepairs() {
-        List<ReasonRepeatInterfaceDto> repeatRepairs = service.getRepeatRepairs15days();
+        List<ReasonRepeatDto> repeatRepairs = service.getRepeatRepairs15days();
         assertEquals(3, repeatRepairs.get(0).getCount());
         assertEquals(1, repeatRepairs.getLast().getCount());
     }
