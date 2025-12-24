@@ -85,8 +85,8 @@ class AtmRepairReasonServiceTest extends IntegrationTest {
     @Test
     @Order(6)
     void testGetRepeatRepairs() {
-        List<ReasonRepeatInterfaceDto> repeatRepairs = service.getRepeatRepairs(15);
-        assertEquals(152, repeatRepairs.get(0).getCount());
+        List<ReasonRepeatInterfaceDto> repeatRepairs = service.getRepeatRepairs15days();
+        assertEquals(151, repeatRepairs.get(0).getCount());
         assertEquals(1, repeatRepairs.getLast().getCount());
     }
 
