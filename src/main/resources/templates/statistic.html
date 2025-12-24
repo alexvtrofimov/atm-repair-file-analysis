@@ -80,12 +80,14 @@
             </div>
 
             <div class="mt-3 w-100" th:if="${repeatRepairs != null}" style="overflow-y: scroll;height: 240px;overflow-x: scroll; border: 1px blue solid">
-                <div class="row row-cols-3 flex-nowrap mx-1 mb-1">
+                <div class="row row-cols-4 flex-nowrap mx-1 mb-1">
+                    <div class="col fw-semibold" style="min-width: 120px; font-size:0.7rem">ATM ID</div>
                     <div class="col fw-semibold" style="min-width: 120px; font-size:0.7rem">CASE ID</div>
                     <div class="col fw-semibold" style="min-width: 300px; font-size:0.7rem">Причина</div>
                     <div class="col fw-semibold" style="min-width: 150px; font-size:0.7rem">Количество повторений за 15 дней</div>
                 </div>
-                <div class="row row-cols-3 flex-nowrap mx-1" th:each="reason:${repeatRepairs}">
+                <div class="row row-cols-4 flex-nowrap mx-1" th:each="reason:${repeatRepairs}">
+                    <div class="col" style="min-width: 120px" th:text="${reason.getAtmId()}"></div>
                     <div class="col" style="min-width: 120px" th:text="${reason.getCaseId()}"></div>
                     <div class="col" style="min-width: 300px" th:text="${reason.getReason()}"></div>
                     <div class="col" style="min-width: 150px" th:text="${reason.getCount()}"></div>

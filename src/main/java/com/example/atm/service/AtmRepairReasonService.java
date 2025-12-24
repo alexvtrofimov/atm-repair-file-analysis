@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -93,9 +90,9 @@ public class AtmRepairReasonService {
 //    }
 
     //Java solve
-    public List<ReasonRepeatInterfaceDto> getRepeatRepairs15days() {
+    public List<ReasonRepeatDto> getRepeatRepairs15days() {
         List<AtmRepairReason> all = atmRepairReasonRepository.findAll();
-        List<ReasonRepeatInterfaceDto> result = new ArrayList<>();
+        List<ReasonRepeatDto> result = new ArrayList<>();
         for (AtmRepairReason reason : all) {
             long countRepeatReasons = all
                     .stream()
@@ -112,7 +109,7 @@ public class AtmRepairReasonService {
                     })
                     .count();
             if (countRepeatReasons > 0) {
-                result.add(new ReasonRepeatDto(reason.getCaseId(), reason.getReason(), countRepeatReasons));
+                result.add(new ReasonRepeatDto(reason.getCaseId(), reason.getAtmId(), reason.getReason(), countRepeatReasons));
             }
         }
         return result

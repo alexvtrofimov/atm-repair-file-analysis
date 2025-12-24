@@ -2,6 +2,7 @@ package com.example.atm.controller;
 
 import com.example.atm.controller.dto.ReasonCountDto;
 import com.example.atm.controller.dto.ReasonDurationDto;
+import com.example.atm.controller.dto.ReasonRepeatDto;
 import com.example.atm.controller.dto.ReasonRepeatInterfaceDto;
 import com.example.atm.entity.AtmRepairReason;
 import com.example.atm.service.AtmRepairReasonService;
@@ -53,7 +54,7 @@ public class StatisticController {
 
     @GetMapping("/repeatRepairs")
     public String repeatRepairs15days(Model model) {
-        List<ReasonRepeatInterfaceDto> repeatRepairs = atmRepairReasonService.getRepeatRepairs15days();
+        List<ReasonRepeatDto> repeatRepairs = atmRepairReasonService.getRepeatRepairs15days();
         model.addAttribute("repeatRepairs", repeatRepairs);
         return "statistic";
     }
