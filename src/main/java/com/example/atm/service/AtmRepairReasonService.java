@@ -103,10 +103,12 @@ public class AtmRepairReasonService {
                         boolean equalsReason = el.getReason().equals(reason.getReason());
                         LocalDateTime start = reason.getTimeBegin();
                         LocalDateTime end = reason.getTimeEnd().plusDays(15);
+                        boolean isNotSelfCaseId = !reason.getCaseId().equals(el.getCaseId());
+                        boolean isOneAtm = reason.getAtmId().equals(el.getAtmId());
                         boolean isTimeBeginIn15daysPeriod =
                                 (el.getTimeBegin().isEqual(start) || el.getTimeBegin().isAfter(start)) &&
                                 (el.getTimeBegin().isEqual(end) || el.getTimeBegin().isBefore(end));
-                        return !reason.getCaseId().equals(el.getCaseId()) && equalsReason && isTimeBeginIn15daysPeriod;
+                        return isNotSelfCaseId && isOneAtm && equalsReason && isTimeBeginIn15daysPeriod;
                     })
                     .count();
             if (countRepeatReasons > 0) {
